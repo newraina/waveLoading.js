@@ -33,8 +33,7 @@ var waveLoading = function () {
         BACKGROUND_COLOR = options.bgColor ? options.bgColor : 'white';
         GLOBAL_ALPHA     = options.alpha ? options.alpha : 1;
         LINE_WIDTH       = options.lineWidth ? options.lineWidth : 1;
-        CALLBACK         = options.callback ? options.callback : function () {
-        };
+        CALLBACK         = options.callback ? options.callback : function () {};
         SHOW_TEXT        = !!options.showText;
         TEXT_SIZE        = options.textSize ? options.textSize + ' ' : '16px ';
         TEXT_COLOR       = options.textColor ? options.textColor : COLOR;
@@ -130,11 +129,13 @@ var waveLoading = function () {
                 tempProcess += STEP;
                 timer = requestAnimationFrame(tempLoop);
             } else {
-                ctx.arc(0, 0, R, 0, Math.PI * 2);
-                ctx.fillStyle = COLOR;
-                ctx.fill();
-                ctx.stroke();
-                drawText();
+                // 下面代码会导致结束时闪一下，暂不知原因
+                // 在波浪的render中，整个while循环结束是再stroke，要比每画一根线都stroke颜色要浅一些，可能与此有关，深色深浅瞬间变化
+                //  ctx.arc(0, 0, R, 0, Math.PI * 2);
+                //  ctx.fillStyle = COLOR;
+                //  ctx.fill();
+                //  ctx.stroke();
+                //  drawText();
 
                 // 执行结束时的回调函数
                 CALLBACK.call(null);
@@ -231,7 +232,7 @@ var waveLoading = function () {
             ctx.globalAlpha = alpha;
 
             angle = getAngle();
-            xPos  = -R;
+            xPos  = -R - R_OFFSET;
             yPos  = 0;
 
             ctx.beginPath();
