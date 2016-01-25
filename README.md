@@ -9,6 +9,7 @@
 ## 使用
 - `waveLoading.init(options)` 初始化
 - `waveLoading.draw()` 绘制动画
+- `waveLoading.setProgress(num)` 动画执行过程中控制进度（0 ~ 100）
 
 ## 配置
 所有选项在`init()`参数中配置：
@@ -36,5 +37,3 @@
 进度提示文字的字重，默认为`lighter`
 - `callback`
 进度完成后执行的回调函数
-
-动画执行过程中，用`waveLoading.setProgress(num)`控制进度（0 ~ 100）
