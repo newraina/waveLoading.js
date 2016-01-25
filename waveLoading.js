@@ -5,6 +5,7 @@ var waveLoading = function () {
     var timer      = null;
     var haveInited = false;
     var waveBehind, waveFront;
+    var oldInitArgument;
 
     // 全局常量声明，初始化在init中进行
     var WIDTH, HEIGHT;
@@ -20,8 +21,9 @@ var waveLoading = function () {
      * @param {object} options
      */
     function init(options) {
-        haveInited = true;
-        options    = options ? options : {};
+        haveInited      = true;
+        oldInitArgument = options;
+        options         = options ? options : {};
 
         canvas           = options.target ? (typeof options.target === 'string' ? document.querySelector(options.target) : options.target) : document.querySelector('canvas');
         ctx              = canvas.getContext('2d');
@@ -73,6 +75,10 @@ var waveLoading = function () {
             return _progress;
         }
 
+        function reset() {
+            set(0);
+        }
+
         function isCompleted() {
             return _progress >= 100;
         }
@@ -80,6 +86,7 @@ var waveLoading = function () {
         return {
             set        : set,
             get        : get,
+            reset      : reset,
             isCompleted: isCompleted
         }
     }();
@@ -130,13 +137,17 @@ var waveLoading = function () {
                 timer = requestAnimationFrame(tempLoop);
             } else {
                 // 下面代码会导致结束时闪一下，暂不知原因
-                // 在波浪的render中，整个while循环结束是再stroke，要比每画一根线都stroke颜色要浅一些，可能与此有关，深色深浅瞬间变化
+                // 在波浪的render中，整个while循环结束时再stroke，要比每画一根线都stroke颜色要浅一些，可能与此有关，深色深浅瞬间变化
                 //  ctx.arc(0, 0, R, 0, Math.PI * 2);
                 //  ctx.fillStyle = COLOR;
                 //  ctx.fill();
                 //  ctx.stroke();
                 //  drawText();
 
+                // 重置与进度相关的属性，便于可能的再次绘制
+                progress.reset();
+                waveBehind.resetOffset();
+                waveFront.resetOffset();
                 // 执行结束时的回调函数
                 CALLBACK.call(null);
             }
@@ -197,18 +208,13 @@ var waveLoading = function () {
          */
         var offset = function () {
             var count;
-            var completed   = false;
             var basicOffset = 5;
             var isTrusteed  = false;
             var trusteedNum = 0;
 
             function calc() {
                 var tempProcess = isTrusteed ? trusteedNum : progress.get();
-
-                count = R - (2 * R) * tempProcess / 100 + yOffset + basicOffset;
-                if (count >= 100) {
-                    completed = true;
-                }
+                count           = R - (2 * R) * tempProcess / 100 + yOffset + basicOffset;
             }
 
             function get() {
@@ -221,8 +227,14 @@ var waveLoading = function () {
                 trusteedNum = num;
             }
 
+            function reset() {
+                isTrusteed  = false;
+                trusteedNum = 0;
+            }
+
             return {
                 get    : get,
+                reset  : reset,
                 trustee: trustee
             }
         }();
@@ -258,8 +270,9 @@ var waveLoading = function () {
         }
 
         return {
-            render   : render,
-            setOffset: offset.trustee
+            render     : render,
+            setOffset  : offset.trustee,
+            resetOffset: offset.reset
         }
     }
 
