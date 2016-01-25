@@ -1,1 +1,1 @@
-<iframe src="demo/index.html"></iframe>
+![](demo/DEMO.gif)
