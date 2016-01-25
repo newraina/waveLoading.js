@@ -1,14 +1,10 @@
-/**
- * setRenderTarget: 指定canvas元素，参数可以是选择器或者元素本身，如果未设定，会从文档中选择第一个canvas元素作为绘制目标
- * draw： 开始绘制动画
- * @type {{setRenderTarget, draw}}
- */
 var waveLoading = function () {
     "use strict";
 
     var canvas, ctx;
     var timer      = null;
     var haveInited = false;
+    var waveBehind, waveFront;
 
     // 全局常量声明，初始化在init中进行
     var WIDTH, HEIGHT;
@@ -16,8 +12,13 @@ var waveLoading = function () {
     var COLOR, TEXT_COLOR, BACKGROUND_COLOR;
     var GLOBAL_ALPHA, LINE_WIDTH;
     var CALLBACK;
-    var SHOW_TEXT;
+    var SHOW_TEXT, TEXT_SIZE, FONT_FAMILY, FONT_WEIGHT;
+    var SPEED;
 
+    /**
+     * 初始化参数
+     * @param {object} options
+     */
     function init(options) {
         haveInited = true;
         options    = options ? options : {};
@@ -29,17 +30,35 @@ var waveLoading = function () {
         R_OFFSET         = 0.5;
         R                = Math.min(WIDTH, HEIGHT) / 2 - R_OFFSET;
         COLOR            = options.color ? options.color : 'rgba(40, 230, 200, 1)';
+        BACKGROUND_COLOR = options.bgColor ? options.bgColor : 'white';
         GLOBAL_ALPHA     = options.alpha ? options.alpha : 1;
         LINE_WIDTH       = options.lineWidth ? options.lineWidth : 1;
-        TEXT_COLOR       = options.textColor ? options.textColor : COLOR;
-        BACKGROUND_COLOR = options.bgColor ? options.bgColor : 'white';
         CALLBACK         = options.callback ? options.callback : function () {
         };
         SHOW_TEXT        = !!options.showText;
+        TEXT_SIZE        = options.textSize ? options.textSize + ' ' : '16px ';
+        TEXT_COLOR       = options.textColor ? options.textColor : COLOR;
+        FONT_FAMILY      = options.fontFamily ? ' ' + options.fontFamily : ' Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", sans-serif';
+        FONT_WEIGHT      = options.fontWeight ? options.fontWeight + ' ' : 'lighter ';
+        SPEED            = options.speed ? options.speed : 1;
 
         ctx.strokeStyle = COLOR;
         ctx.lineWidth   = LINE_WIDTH;
         ctx.translate(WIDTH / 2, HEIGHT / 2);
+
+        // 背景波浪
+        waveBehind = wave({
+            alpha  : 0.4,
+            yOffset: -4,
+            speed  : 0.07 * SPEED
+        });
+
+        // 前景波浪
+        waveFront = wave({
+            alpha  : 1,
+            yOffset: 0,
+            speed  : 0.06 * SPEED
+        });
     }
 
     var progress = function () {
@@ -66,20 +85,6 @@ var waveLoading = function () {
         }
     }();
 
-    // 背景波浪
-    var waveBehind = wave({
-        alpha  : 0.4,
-        yOffset: -4,
-        speed  : 0.07
-    });
-
-    // 前景波浪
-    var waveFront = wave({
-        alpha  : 1,
-        yOffset: 0,
-        speed  : 0.06
-    });
-
     function draw() {
         if (!haveInited) {
             return;
@@ -90,7 +95,7 @@ var waveLoading = function () {
         ctx.arc(0, 0, R, 0, Math.PI * 2);
         ctx.stroke();
 
-        ctx.lineWidth = LINE_WIDTH;
+        ctx.lineWidth = 1;
         waveBehind.render();
         waveFront.render();
         drawText();
@@ -102,18 +107,19 @@ var waveLoading = function () {
         }
     }
 
+    /**
+     * 进度完成后的绘制
+     * 接管前景波浪和背景波浪的进度控制
+     * 使其快速上升填满容器然后停止动画
+     */
     function finalDraw() {
-        /*
-         * 进度完成后的绘制
-         * 接管前景波浪和背景波浪的进度控制
-         * 使其快速上升填满容器然后停止动画
-         */
         var tempProcess = progress.get();
         var MAX_PROCESS = 120;
         var STEP        = 0.8;
 
         (function tempLoop() {
             ctx.clearRect(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT);
+            // 接管进度
             waveFront.setOffset(tempProcess);
             waveBehind.setOffset(tempProcess);
             waveFront.render();
@@ -127,6 +133,7 @@ var waveLoading = function () {
                 ctx.arc(0, 0, R, 0, Math.PI * 2);
                 ctx.fillStyle = COLOR;
                 ctx.fill();
+                ctx.stroke();
                 drawText();
 
                 // 执行结束时的回调函数
@@ -135,10 +142,10 @@ var waveLoading = function () {
         })()
     }
 
+    /**
+     * 绘制进度提示字样（百分比）
+     */
     function drawText() {
-        /**
-         * 绘制进度提示字样（百分比）
-         */
         if (!SHOW_TEXT) {
             return;
         }
@@ -147,7 +154,7 @@ var waveLoading = function () {
         var tempProcess = progress.get();
         tempProcess     = tempProcess > 100 ? 100 : tempProcess;
         ctx.save();
-        ctx.font         = 'lighter 16px Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", sans-serif';
+        ctx.font         = FONT_WEIGHT + TEXT_SIZE + FONT_FAMILY;
         ctx.textBaseline = 'middle';
         ctx.textAlign    = 'center';
         ctx.fillStyle    = tempProcess > THRESHOLD ? BACKGROUND_COLOR : TEXT_COLOR;
@@ -161,21 +168,20 @@ var waveLoading = function () {
         return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
     }
 
+    /**
+     * 单个基础波浪动画生成函数
+     */
     function wave(options) {
-        /**
-         * 单个基础波浪动画生成函数
-         * @type {{}}
-         */
-        options = options ? options : {};
-        var alpha          = options.alpha ? options.alpha : GLOBAL_ALPHA,
-            xPos           = -100,
-            yPos           = 0,
-            xStep          = 1,
-            angleStep      = 0.025,
-            peak           = options.peak ? options.peak : 18, // 正弦波峰值
-            angle,
-            yOffset        = options.yOffset ? options.yOffset : 0,
-            angleIncrement = options.speed ? options.speed : 0.06;
+        options            = options ? options : {};
+        var xPos           = -R;
+        var yPos           = 0;
+        var xStep          = 1;
+        var angleStep      = 0.025;
+        var angle          = 0;
+        var alpha          = options.alpha ? options.alpha * GLOBAL_ALPHA : 1;
+        var peak           = options.peak ? options.peak : 18;
+        var yOffset        = options.yOffset ? options.yOffset : 0;
+        var angleIncrement = options.speed ? options.speed : 0.06;
 
         var getAngle = function () {
             var count = Math.PI / 2;
@@ -185,11 +191,10 @@ var waveLoading = function () {
             }
         }();
 
+        /**
+         * 偏移量处理
+         */
         var offset = function () {
-            /*
-             * 偏移量处理
-             *
-             */
             var count;
             var completed   = false;
             var basicOffset = 5;

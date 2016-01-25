@@ -13,12 +13,15 @@ waveLoading.init({
 
 waveLoading.draw();
 
-var progress = 0;
+var progress   = 0;
+var maxProcess = 101;
+var step       = 0.13;
+
 (function loading() {
     waveLoading.setProgress(progress);
-    progress += 0.2;
+    progress += step;
     range.style.width = progress * 2 + 'px';
-    if (progress <= 101) {
+    if (progress <= maxProcess) {
         requestAnimationFrame(loading);
     }
 })();
