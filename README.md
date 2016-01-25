@@ -34,3 +34,5 @@
 进度提示文字使用的字体，默认为`Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", sans-serif`
 - `fontWeight`
 进度提示文字的字重，默认为`lighter`
+- `callback`
+进度完成后执行的回调函数
