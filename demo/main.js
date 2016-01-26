@@ -53,6 +53,9 @@ function autoPlay() {
     if (message.className.indexOf('hide') < 0) {
         addClass(message, 'hide');
     }
+    if (arrowBox.className.indexOf('hide') < 0) {
+        addClass(arrowBox, 'hide');
+    }
 
     // 遮罩层，防止自动演示期间的用户操作
     removeClass(shade, 'hide');

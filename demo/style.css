@@ -18,10 +18,10 @@ canvas {
 
     width: 100%;
     height: 7px;
-    margin-top: 20px;
+    margin-top: 30px;
 
     border-radius: 32px;
-    background: #EBEDEF;
+    background: #ebedef;
 }
 
 .process-passed {
@@ -31,7 +31,7 @@ canvas {
     height: 100%;
 
     border-radius: 32px;
-    background: #28E6C8;
+    background: #28e6c8;
 }
 
 .process-btn {
@@ -48,11 +48,12 @@ canvas {
     cursor: move;
 
     border-radius: 50%;
-    background: #27C9AB;
+    background: #27c9ab;
 }
 
 .arrow-box {
     font-size: 12px;
+    line-height: 18px;
 
     position: absolute;
     top: -30px;
@@ -60,11 +61,10 @@ canvas {
 
     width: 34px;
     height: 18px;
-    line-height: 18px;
 
-    color: #27C9AB;
-    border: 1px solid #27C9AB;
-    background: #FFF;
+    color: #27c9ab;
+    border: 1px solid #27c9ab;
+    background: #fff;
 }
 
 .arrow-box:after,
@@ -86,14 +86,14 @@ canvas {
     margin-left: -5px;
 
     border-width: 5px;
-    border-top-color: #FFF;
+    border-top-color: #fff;
 }
 
 .arrow-box:before {
     margin-left: -6px;
 
     border-width: 6px;
-    border-top-color: #27C9AB;
+    border-top-color: #27c9ab;
 }
 
 .shade {
@@ -117,18 +117,19 @@ canvas {
 .control {
     position: relative;
 
-    margin-top: 40px;
+    margin-top: 30px;
     padding: 8px 19px;
 
     cursor: pointer;
     /*奇怪，transition为什么不起作用*/
-    -webkit-transition: all ease 3000ms;
-    transition: all ease 3000ms;
+    -webkit-transition: all 300ms;
+            transition: all 300ms;
+    letter-spacing: 1px;
 
-    color: #FFF;
+    color: #fff;
     border: none;
     border-radius: 6px;
-    background-color: #27C9AB;
+    background-color: #27c9ab;
 }
 
 .control:hover {
@@ -150,29 +151,29 @@ canvas {
     80%,
     to {
         -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
         -webkit-animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
-        animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
+                animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
     }
 
     40%,
     43% {
         -webkit-transform: translate3d(0, -30px, 0);
-        transform: translate3d(0, -30px, 0);
+                transform: translate3d(0, -30px, 0);
         -webkit-animation-timing-function: cubic-bezier(.755, .050, .855, .060);
-        animation-timing-function: cubic-bezier(.755, .050, .855, .060);
+                animation-timing-function: cubic-bezier(.755, .050, .855, .060);
     }
 
     70% {
         -webkit-transform: translate3d(0, -15px, 0);
-        transform: translate3d(0, -15px, 0);
+                transform: translate3d(0, -15px, 0);
         -webkit-animation-timing-function: cubic-bezier(.755, .050, .855, .060);
-        animation-timing-function: cubic-bezier(.755, .050, .855, .060);
+                animation-timing-function: cubic-bezier(.755, .050, .855, .060);
     }
 
     90% {
         -webkit-transform: translate3d(0, -4px, 0);
-        transform: translate3d(0, -4px, 0);
+                transform: translate3d(0, -4px, 0);
     }
 }
 
@@ -183,43 +184,43 @@ canvas {
     80%,
     to {
         -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
         -webkit-animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
-        animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
+                animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
     }
 
     40%,
     43% {
         -webkit-transform: translate3d(0, -30px, 0);
-        transform: translate3d(0, -30px, 0);
+                transform: translate3d(0, -30px, 0);
         -webkit-animation-timing-function: cubic-bezier(.755, .050, .855, .060);
-        animation-timing-function: cubic-bezier(.755, .050, .855, .060);
+                animation-timing-function: cubic-bezier(.755, .050, .855, .060);
     }
 
     70% {
         -webkit-transform: translate3d(0, -15px, 0);
-        transform: translate3d(0, -15px, 0);
+                transform: translate3d(0, -15px, 0);
         -webkit-animation-timing-function: cubic-bezier(.755, .050, .855, .060);
-        animation-timing-function: cubic-bezier(.755, .050, .855, .060);
+                animation-timing-function: cubic-bezier(.755, .050, .855, .060);
     }
 
     90% {
         -webkit-transform: translate3d(0, -4px, 0);
-        transform: translate3d(0, -4px, 0);
+                transform: translate3d(0, -4px, 0);
     }
 }
 
 .bounce {
     -webkit-transform-origin: center bottom;
-    transform-origin: center bottom;
+            transform-origin: center bottom;
     -webkit-animation-name: bounce;
-    animation-name: bounce;
+            animation-name: bounce;
 }
 
 .animated {
     -webkit-animation-duration: 1s;
-    animation-duration: 1s;
+            animation-duration: 1s;
 
     -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
+            animation-fill-mode: both;
 }
