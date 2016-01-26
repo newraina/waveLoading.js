@@ -9,7 +9,7 @@ var waveLoading = function () {
 
     // 全局常量声明，初始化在init中进行
     var WIDTH, HEIGHT;
-    var R_OFFSET, R;
+    var LINE_OFFSET, R;
     var COLOR, TEXT_COLOR, BACKGROUND_COLOR;
     var GLOBAL_ALPHA, LINE_WIDTH;
     var CALLBACK;
@@ -29,8 +29,8 @@ var waveLoading = function () {
         ctx              = canvas.getContext('2d');
         WIDTH            = canvas.width;
         HEIGHT           = canvas.height;
-        R_OFFSET         = 0.5;
-        R                = Math.min(WIDTH, HEIGHT) / 2 - R_OFFSET;
+        LINE_OFFSET      = 0.5;
+        R                = Math.min(WIDTH, HEIGHT) / 2;
         COLOR            = options.color ? options.color : 'rgba(40, 230, 200, 1)';
         BACKGROUND_COLOR = options.bgColor ? options.bgColor : 'white';
         GLOBAL_ALPHA     = options.alpha ? options.alpha : 1;
@@ -244,7 +244,7 @@ var waveLoading = function () {
             ctx.globalAlpha = alpha;
 
             angle = getAngle();
-            xPos  = -R - R_OFFSET;
+            xPos  = -R;
             yPos  = 0;
 
             ctx.beginPath();
@@ -256,8 +256,9 @@ var waveLoading = function () {
                 var nextYPos   = Math.sin(angle) * peak + tempOffset;
                 var nextAngle  = angle + angleStep;
 
-                ctx.moveTo(xPos, yPos);
-                ctx.lineTo(xPos, yEnd);
+                // 解决canvas线宽（lineWidth）引起的坐标不准问题，引入LINE_OFFSET，偏移0.5个像素
+                ctx.moveTo(xPos - LINE_OFFSET, yPos);
+                ctx.lineTo(xPos - LINE_OFFSET, yEnd);
 
                 xPos  = nextXPos;
                 yPos  = dist(nextXPos, nextYPos) < R ? nextYPos : yEnd * (tempOffset > 0 ? 1 : -1);
