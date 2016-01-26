@@ -8,6 +8,7 @@ var message         = container.querySelector('.message');
 var autoPlayControl = container.querySelector('.control');
 var processControl  = container.querySelector('.process-btn');
 var shade           = container.querySelector('.shade');
+var arrowBox        = container.querySelector('.arrow-box');
 
 var progress   = 0;
 var maxProcess = 101;
@@ -28,6 +29,9 @@ waveLoading.draw();
 
 autoPlayControl.addEventListener('click', autoPlay);
 processControl.addEventListener('mousedown', function () {
+    if (arrowBox.className.indexOf('hide') < 0) {
+        addClass(arrowBox, 'hide');
+    }
     document.addEventListener('mousemove', handleMouseMove);
 });
 

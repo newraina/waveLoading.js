@@ -14,12 +14,14 @@ canvas {
 }
 
 .process {
+    position: relative;
+
     width: 100%;
     height: 7px;
     margin-top: 20px;
 
     border-radius: 32px;
-    background: #ebedef;
+    background: #EBEDEF;
 }
 
 .process-passed {
@@ -29,7 +31,7 @@ canvas {
     height: 100%;
 
     border-radius: 32px;
-    background: #28e6c8;
+    background: #28E6C8;
 }
 
 .process-btn {
@@ -46,7 +48,52 @@ canvas {
     cursor: move;
 
     border-radius: 50%;
-    background: #27c9ab;
+    background: #27C9AB;
+}
+
+.arrow-box {
+    font-size: 12px;
+
+    position: absolute;
+    top: -30px;
+    left: -18px;
+
+    width: 34px;
+    height: 18px;
+    line-height: 18px;
+
+    color: #27C9AB;
+    border: 1px solid #27C9AB;
+    background: #FFF;
+}
+
+.arrow-box:after,
+.arrow-box:before {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+
+    width: 0;
+    height: 0;
+
+    content: ' ';
+    pointer-events: none;
+
+    border: solid transparent;
+}
+
+.arrow-box:after {
+    margin-left: -5px;
+
+    border-width: 5px;
+    border-top-color: #FFF;
+}
+
+.arrow-box:before {
+    margin-left: -6px;
+
+    border-width: 6px;
+    border-top-color: #27C9AB;
 }
 
 .shade {
@@ -75,12 +122,13 @@ canvas {
 
     cursor: pointer;
     /*奇怪，transition为什么不起作用*/
+    -webkit-transition: all ease 3000ms;
     transition: all ease 3000ms;
 
-    color: #fff;
+    color: #FFF;
     border: none;
     border-radius: 6px;
-    background-color: #27c9ab;
+    background-color: #27C9AB;
 }
 
 .control:hover {
@@ -102,29 +150,29 @@ canvas {
     80%,
     to {
         -webkit-transform: translate3d(0, 0, 0);
-                transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
         -webkit-animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
-                animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
+        animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
     }
 
     40%,
     43% {
         -webkit-transform: translate3d(0, -30px, 0);
-                transform: translate3d(0, -30px, 0);
+        transform: translate3d(0, -30px, 0);
         -webkit-animation-timing-function: cubic-bezier(.755, .050, .855, .060);
-                animation-timing-function: cubic-bezier(.755, .050, .855, .060);
+        animation-timing-function: cubic-bezier(.755, .050, .855, .060);
     }
 
     70% {
         -webkit-transform: translate3d(0, -15px, 0);
-                transform: translate3d(0, -15px, 0);
+        transform: translate3d(0, -15px, 0);
         -webkit-animation-timing-function: cubic-bezier(.755, .050, .855, .060);
-                animation-timing-function: cubic-bezier(.755, .050, .855, .060);
+        animation-timing-function: cubic-bezier(.755, .050, .855, .060);
     }
 
     90% {
         -webkit-transform: translate3d(0, -4px, 0);
-                transform: translate3d(0, -4px, 0);
+        transform: translate3d(0, -4px, 0);
     }
 }
 
@@ -135,43 +183,43 @@ canvas {
     80%,
     to {
         -webkit-transform: translate3d(0, 0, 0);
-                transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
         -webkit-animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
-                animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
+        animation-timing-function: cubic-bezier(.215, .610, .355, 1.000);
     }
 
     40%,
     43% {
         -webkit-transform: translate3d(0, -30px, 0);
-                transform: translate3d(0, -30px, 0);
+        transform: translate3d(0, -30px, 0);
         -webkit-animation-timing-function: cubic-bezier(.755, .050, .855, .060);
-                animation-timing-function: cubic-bezier(.755, .050, .855, .060);
+        animation-timing-function: cubic-bezier(.755, .050, .855, .060);
     }
 
     70% {
         -webkit-transform: translate3d(0, -15px, 0);
-                transform: translate3d(0, -15px, 0);
+        transform: translate3d(0, -15px, 0);
         -webkit-animation-timing-function: cubic-bezier(.755, .050, .855, .060);
-                animation-timing-function: cubic-bezier(.755, .050, .855, .060);
+        animation-timing-function: cubic-bezier(.755, .050, .855, .060);
     }
 
     90% {
         -webkit-transform: translate3d(0, -4px, 0);
-                transform: translate3d(0, -4px, 0);
+        transform: translate3d(0, -4px, 0);
     }
 }
 
 .bounce {
     -webkit-transform-origin: center bottom;
-            transform-origin: center bottom;
+    transform-origin: center bottom;
     -webkit-animation-name: bounce;
-            animation-name: bounce;
+    animation-name: bounce;
 }
 
 .animated {
     -webkit-animation-duration: 1s;
-            animation-duration: 1s;
+    animation-duration: 1s;
 
     -webkit-animation-fill-mode: both;
-            animation-fill-mode: both;
+    animation-fill-mode: both;
 }
