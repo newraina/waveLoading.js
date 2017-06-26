@@ -4,6 +4,7 @@
   "description": "",
   "main": "waveLoading.js",
   "scripts": {
+    "build": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "newraina",
