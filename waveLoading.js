@@ -15,6 +15,7 @@ var waveLoading = function () {
     var CALLBACK;
     var SHOW_TEXT, TEXT_SIZE, FONT_FAMILY, FONT_WEIGHT;
     var SPEED;
+    var PEAK;
 
     /**
      * 初始化参数
@@ -42,6 +43,7 @@ var waveLoading = function () {
         FONT_FAMILY      = options.fontFamily ? ' ' + options.fontFamily : ' Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", sans-serif';
         FONT_WEIGHT      = options.fontWeight ? options.fontWeight + ' ' : 'lighter ';
         SPEED            = options.speed ? options.speed : 1;
+        PEAK             = options.peak ? options.peak : 18;
 
         ctx.strokeStyle = COLOR;
         ctx.lineWidth   = LINE_WIDTH;
@@ -51,14 +53,16 @@ var waveLoading = function () {
         waveBehind = wave({
             alpha  : 0.4,
             yOffset: -4,
-            speed  : 0.07 * SPEED
+            speed  : 0.07 * SPEED,
+            peak   : PEAK
         });
 
         // 前景波浪
         waveFront = wave({
             alpha  : 1,
             yOffset: 0,
-            speed  : 0.06 * SPEED
+            speed  : 0.06 * SPEED,
+            peak   : PEAK
         });
     }
 
