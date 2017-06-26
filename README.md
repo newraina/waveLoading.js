@@ -1,3 +1,5 @@
+![](https://img.shields.io/npm/v/wave-loading.svg)
+
 # 波浪进度指示器
 灵感来自开发者头条介绍的iOS版[波浪进度加载指示器](http://toutiao.io/posts/o6c3dx)，用js仿写了一个。
 
