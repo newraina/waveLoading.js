@@ -1,9 +1,9 @@
 # 波浪进度指示器
 灵感来自开发者头条介绍的iOS版[波浪进度加载指示器](http://toutiao.io/posts/o6c3dx)，用js仿写了一个。
 
-## 动画演示 [网页演示](http://newraina.github.io/waveLoading.js/demo/)
+## 动画演示 [网页演示](http://newraina.github.io/waveLoading.js/example/)
 <p align="center">
-  <img src="./demo/DEMO.gif" alt="示例动画">
+  <img src="./example/DEMO.gif" alt="示例动画">
 </p>
 
 ## 使用

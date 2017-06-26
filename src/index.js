@@ -287,3 +287,5 @@ var waveLoading = function () {
         setProgress: progress.set
     }
 }();
+
+export default waveLoading;
