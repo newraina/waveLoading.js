@@ -2,16 +2,14 @@
   "name": "wave-loading",
   "version": "1.0.0",
   "description": "",
-  "main": "waveLoading.js",
+  "main": "lib/waveLoading.js",
   "scripts": {
-    "build": "gulp",
+    "build": "rollup src/index.js --format umd --name 'waveLoading' --output lib/waveLoading.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "newraina",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^1.5.1"
+    "rollup": "^0.43.0"
   }
 }
